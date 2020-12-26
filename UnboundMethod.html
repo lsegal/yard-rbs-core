@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: UnboundMethod
+  
+    &mdash; Documentation by YARD 0.9.25
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "UnboundMethod";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (U)</a> &raquo;
+    
+    
+    <span class="title">UnboundMethod</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: UnboundMethod
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">UnboundMethod</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>core/unbound_method.rbs</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Ruby supports two forms of objectified methods. Class Method is used to
+represent methods that are associated with a particular object: these method
+objects are bound to that object. Bound method objects for an object can be
+created using Object#method.</p>
+
+<p>Ruby also supports unbound methods; methods objects that are not associated
+with a particular object. These can be created either by calling
+Module#instance_method or by calling #unbind on a bound method object. The
+result of both of these is an UnboundMethod object.</p>
+
+<p>Unbound methods can only be called after they are bound to an object. That
+object must be a kind_of? the method&#39;s original class.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Square</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_area'>area</span>
+    <span class='ivar'>@side</span> <span class='op'>*</span> <span class='ivar'>@side</span>
+  <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_side'>side</span><span class='rparen'>)</span>
+    <span class='ivar'>@side</span> <span class='op'>=</span> <span class='id identifier rubyid_side'>side</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_area_un'>area_un</span> <span class='op'>=</span> <span class='const'>Square</span><span class='period'>.</span><span class='id identifier rubyid_instance_method'>instance_method</span><span class='lparen'>(</span><span class='symbol'>:area</span><span class='rparen'>)</span>
+
+<span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='const'>Square</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>12</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_area'>area</span> <span class='op'>=</span> <span class='id identifier rubyid_area_un'>area_un</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_area'>area</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>   <span class='comment'>#=&gt; 144
+</span></code></pre>
+
+<p>Unbound methods are a reference to the method at the time it was objectified:
+subsequent changes to the underlying class will not affect the unbound method.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Test</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_test'>test</span>
+    <span class='symbol'>:original</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_um'>um</span> <span class='op'>=</span> <span class='const'>Test</span><span class='period'>.</span><span class='id identifier rubyid_instance_method'>instance_method</span><span class='lparen'>(</span><span class='symbol'>:test</span><span class='rparen'>)</span>
+<span class='kw'>class</span> <span class='const'>Test</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_test'>test</span>
+    <span class='symbol'>:modified</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_t'>t</span> <span class='op'>=</span> <span class='const'>Test</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_test'>test</span>            <span class='comment'>#=&gt; :modified
+</span><span class='id identifier rubyid_um'>um</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>   <span class='comment'>#=&gt; :original
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#arity-instance_method" title="#arity (instance method)">#<strong>arity</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns an indication of the number of arguments accepted by a method.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bind-instance_method" title="#bind (instance method)">#<strong>bind</strong>(obj)  &#x21d2; Method </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Bind <em>umeth</em> to <em>obj</em>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-instance_method" title="#name (instance method)">#<strong>name</strong>  &#x21d2; Symbol </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the name of the method.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#owner-instance_method" title="#owner (instance method)">#<strong>owner</strong>  &#x21d2; Module </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the class or module that defines the method.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parameters-instance_method" title="#parameters (instance method)">#<strong>parameters</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the parameter information of this method.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#source_location-instance_method" title="#source_location (instance method)">#<strong>source_location</strong>  &#x21d2; [ String, Integer ]? </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the Ruby source filename and line number containing this method or nil if this method was not defined in Ruby (i.e. native).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#super_method-instance_method" title="#super_method (instance method)">#<strong>super_method</strong>  &#x21d2; UnboundMethod? </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a Method of superclass which would be called when super is used or nil if there is no method on superclass.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="arity-instance_method">
+  
+    #<strong>arity</strong>  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns an indication of the number of arguments accepted by a method. Returns
+a nonnegative integer for methods that take a fixed number of arguments. For
+Ruby methods that take a variable number of arguments, returns -n-1, where n
+is the number of required arguments. Keyword arguments will be considered as a
+single additional argument, that argument being mandatory if any keyword
+argument is mandatory. For methods written in C, returns -1 if the call takes
+a variable number of arguments.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>C</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_one'>one</span><span class='semicolon'>;</span>    <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_two'>two</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_three'>three</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_a'>a</span><span class='rparen'>)</span><span class='semicolon'>;</span>  <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_four'>four</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_five'>five</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_c'>c</span><span class='rparen'>)</span><span class='semicolon'>;</span>    <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_six'>six</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_seven'>seven</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='label'>x:</span><span class='int'>0</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_eight'>eight</span><span class='lparen'>(</span><span class='label'>x:</span><span class='comma'>,</span> <span class='label'>y:</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_nine'>nine</span><span class='lparen'>(</span><span class='label'>x:</span><span class='comma'>,</span> <span class='label'>y:</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_z'>z</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_ten'>ten</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='label'>x:</span><span class='comma'>,</span> <span class='label'>y:</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_c'>c</span> <span class='op'>=</span> <span class='const'>C</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:one</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>     <span class='comment'>#=&gt; 0
+</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:two</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>     <span class='comment'>#=&gt; 1
+</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:three</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>   <span class='comment'>#=&gt; -1
+</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:four</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>    <span class='comment'>#=&gt; 2
+</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:five</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>    <span class='comment'>#=&gt; -3
+</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:six</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>     <span class='comment'>#=&gt; -3
+</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:seven</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>   <span class='comment'>#=&gt; -3
+</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:eight</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>   <span class='comment'>#=&gt; 1
+</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:nine</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>    <span class='comment'>#=&gt; 1
+</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:ten</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>     <span class='comment'>#=&gt; -2
+</span>
+<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cat</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:size</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>      <span class='comment'>#=&gt; 0
+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cat</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:replace</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>   <span class='comment'>#=&gt; 1
+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cat</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:squeeze</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>   <span class='comment'>#=&gt; -1
+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cat</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:count</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>     <span class='comment'>#=&gt; -1
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="bind-instance_method">
+  
+    #<strong>bind</strong>(obj)  &#x21d2; <tt><span class='object_link'><a href="Method.html" title="Method (class)">Method</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Bind <em>umeth</em> to <em>obj</em>. If Klass was the class from which <em>umeth</em> was obtained,
+<code>obj.kind_of?(Klass)</code> must be true.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>A</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_test'>test</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>In test, class = </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+<span class='kw'>class</span> <span class='const'>B</span> <span class='op'>&lt;</span> <span class='const'>A</span>
+<span class='kw'>end</span>
+<span class='kw'>class</span> <span class='const'>C</span> <span class='op'>&lt;</span> <span class='const'>B</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_um'>um</span> <span class='op'>=</span> <span class='const'>B</span><span class='period'>.</span><span class='id identifier rubyid_instance_method'>instance_method</span><span class='lparen'>(</span><span class='symbol'>:test</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_bm'>bm</span> <span class='op'>=</span> <span class='id identifier rubyid_um'>um</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='const'>C</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_bm'>bm</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+<span class='id identifier rubyid_bm'>bm</span> <span class='op'>=</span> <span class='id identifier rubyid_um'>um</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='const'>B</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_bm'>bm</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+<span class='id identifier rubyid_bm'>bm</span> <span class='op'>=</span> <span class='id identifier rubyid_um'>um</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='const'>A</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_bm'>bm</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+</code></pre>
+
+<p><em>produces:</em></p>
+
+<pre class="code ruby"><code class="ruby">In test, class = C
+In test, class = B
+prog.rb:16:in `bind&#39;: bind argument must be an instance of B (TypeError)
+ from prog.rb:16
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>obj</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Method.html" title="Method (class)">Method</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="name-instance_method">
+  
+    #<strong>name</strong>  &#x21d2; <tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the name of the method.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="owner-instance_method">
+  
+    #<strong>owner</strong>  &#x21d2; <tt><span class='object_link'><a href="Module.html" title="Module (class)">Module</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the class or module that defines the method. See also Method#receiver.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lparen'>(</span><span class='int'>1</span><span class='op'>..</span><span class='int'>3</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:map</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_owner'>owner</span> <span class='comment'>#=&gt; Enumerable
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Module.html" title="Module (class)">Module</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parameters-instance_method">
+  
+    
+      <span class="overload">#<strong>parameters</strong>  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[[ <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span>, <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span> ]]</tt> </span>
+    
+      <span class="overload">#<strong>parameters</strong>  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[[ <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span> ]]</tt> </span>
+    
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the parameter information of this method.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>def</span> <span class='id identifier rubyid_foo'>foo</span><span class='lparen'>(</span><span class='id identifier rubyid_bar'>bar</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+<span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:foo</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='comment'>#=&gt; [[:req, :bar]]
+</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_foo'>foo</span><span class='lparen'>(</span><span class='id identifier rubyid_bar'>bar</span><span class='comma'>,</span> <span class='id identifier rubyid_baz'>baz</span><span class='comma'>,</span> <span class='id identifier rubyid_bat'>bat</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+<span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:foo</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='comment'>#=&gt; [[:req, :bar], [:req, :baz], [:req, :bat], [:block, :blk]]
+</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_foo'>foo</span><span class='lparen'>(</span><span class='id identifier rubyid_bar'>bar</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+<span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:foo</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='comment'>#=&gt; [[:req, :bar], [:rest, :args]]
+</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_foo'>foo</span><span class='lparen'>(</span><span class='id identifier rubyid_bar'>bar</span><span class='comma'>,</span> <span class='id identifier rubyid_baz'>baz</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+<span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:foo</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='comment'>#=&gt; [[:req, :bar], [:req, :baz], [:rest, :args], [:block, :blk]]
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>parameters</strong>  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[[ <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span>, <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span> ]]</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[[ <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span>, <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span> ]]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>parameters</strong>  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[[ <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span> ]]</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[[ <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span> ]]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="source_location-instance_method">
+  
+    #<strong>source_location</strong>  &#x21d2; <tt>[ <span class='object_link'><a href="String.html" title="String (class)">String</a></span>, <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span> ]?</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the Ruby source filename and line number containing this method or nil
+if this method was not defined in Ruby (i.e. native).</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>[ <span class='object_link'><a href="String.html" title="String (class)">String</a></span>, <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span> ]?</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="super_method-instance_method">
+  
+    #<strong>super_method</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="UnboundMethod (class)">UnboundMethod</a></span>?</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a Method of superclass which would be called when super is used or nil
+if there is no method on superclass.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="UnboundMethod (class)">UnboundMethod</a></span>?</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Dec 25 20:29:34 2020 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.25 (ruby-2.6.5).
+</div>
+
+    </div>
+  </body>
+</html>

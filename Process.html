@@ -1,0 +1,3930 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Process
+  
+    &mdash; Documentation by YARD 0.9.25
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Process";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (P)</a> &raquo;
+    
+    
+    <span class="title">Process</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: Process
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>core/process.rbs</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>The module contains several groups of functionality for handling OS processes:</p>
+
+<ul>
+<li>  Low-level property introspection and management of the current process,
+like Process.argv0, Process.pid;</li>
+<li>  Low-level introspection of other processes, like Process.getpgid,
+Process.getpriority;</li>
+<li>  Management of the current process: Process.abort, Process.exit,
+Process.daemon, etc. (for convenience, most of those are also available as
+global functions and module functions of Kernel);</li>
+<li>  Creation and management of child processes: Process.fork, Process.spawn,
+and related methods;</li>
+<li>  Management of low-level system clock: Process.times and
+Process.clock_gettime, which could be important for proper benchmarking
+and other elapsed time measurement tasks.</li>
+</ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Process/GID.html" title="Process::GID (module)">GID</a></span>, <span class='object_link'><a href="Process/Sys.html" title="Process::Sys (module)">Sys</a></span>, <span class='object_link'><a href="Process/UID.html" title="Process::UID (module)">UID</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Process/Status.html" title="Process::Status (class)">Status</a></span>, <span class='object_link'><a href="Process/Tms.html" title="Process::Tms (class)">Tms</a></span>, <span class='object_link'><a href="Process/Waiter.html" title="Process::Waiter (class)">Waiter</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="CLOCK_BOOTTIME-constant" class="">CLOCK_BOOTTIME =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.clock_gettime</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="CLOCK_BOOTTIME_ALARM-constant" class="">CLOCK_BOOTTIME_ALARM =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.clock_gettime</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="CLOCK_MONOTONIC-constant" class="">CLOCK_MONOTONIC =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.clock_gettime</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="CLOCK_MONOTONIC_COARSE-constant" class="">CLOCK_MONOTONIC_COARSE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.clock_gettime</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="CLOCK_MONOTONIC_RAW-constant" class="">CLOCK_MONOTONIC_RAW =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.clock_gettime</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="CLOCK_PROCESS_CPUTIME_ID-constant" class="">CLOCK_PROCESS_CPUTIME_ID =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.clock_gettime</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="CLOCK_REALTIME-constant" class="">CLOCK_REALTIME =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.clock_gettime</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="CLOCK_REALTIME_ALARM-constant" class="">CLOCK_REALTIME_ALARM =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.clock_gettime</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="CLOCK_REALTIME_COARSE-constant" class="">CLOCK_REALTIME_COARSE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.clock_gettime</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="CLOCK_THREAD_CPUTIME_ID-constant" class="">CLOCK_THREAD_CPUTIME_ID =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.clock_gettime</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="PRIO_PGRP-constant" class="">PRIO_PGRP =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.setpriority</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="PRIO_PROCESS-constant" class="">PRIO_PROCESS =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.setpriority</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="PRIO_USER-constant" class="">PRIO_USER =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.setpriority</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_AS-constant" class="">RLIMIT_AS =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Maximum size of the process&#39;s virtual memory (address space) in bytes.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_CORE-constant" class="">RLIMIT_CORE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Maximum size of the core file.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_CPU-constant" class="">RLIMIT_CPU =
+          <div class="docstring">
+  <div class="discussion">
+    <p>CPU time limit in seconds.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_DATA-constant" class="">RLIMIT_DATA =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Maximum size of the process&#39;s data segment.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_FSIZE-constant" class="">RLIMIT_FSIZE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Maximum size of files that the process may create.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_MEMLOCK-constant" class="">RLIMIT_MEMLOCK =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Maximum number of bytes of memory that may be locked into RAM.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_MSGQUEUE-constant" class="">RLIMIT_MSGQUEUE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Specifies the limit on the number of bytes that can be allocated for POSIX
+message queues for the real user ID of the calling process.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_NICE-constant" class="">RLIMIT_NICE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Specifies a ceiling to which the process&#39;s nice value can be raised.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_NOFILE-constant" class="">RLIMIT_NOFILE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Specifies a value one greater than the maximum file descriptor number that can
+be opened by this process.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_NPROC-constant" class="">RLIMIT_NPROC =
+          <div class="docstring">
+  <div class="discussion">
+    <p>The maximum number of processes that can be created for the real user ID of
+the calling process.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_RSS-constant" class="">RLIMIT_RSS =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Specifies the limit (in pages) of the process&#39;s resident set.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_RTPRIO-constant" class="">RLIMIT_RTPRIO =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Specifies a ceiling on the real-time priority that may be set for this
+process.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_RTTIME-constant" class="">RLIMIT_RTTIME =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Specifies limit on CPU time this process scheduled under a real-time
+scheduling policy can consume.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_SIGPENDING-constant" class="">RLIMIT_SIGPENDING =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Specifies a limit on the number of signals that may be queued for the real
+user ID of the calling process.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIMIT_STACK-constant" class="">RLIMIT_STACK =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Maximum size of the stack, in bytes.</p>
+
+<p>see the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIM_INFINITY-constant" class="">RLIM_INFINITY =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.setrlimit</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIM_SAVED_CUR-constant" class="">RLIM_SAVED_CUR =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.setrlimit</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="RLIM_SAVED_MAX-constant" class="">RLIM_SAVED_MAX =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.setrlimit</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="WNOHANG-constant" class="">WNOHANG =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.wait</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+        <dt id="WUNTRACED-constant" class="">WUNTRACED =
+          <div class="docstring">
+  <div class="discussion">
+    <p>see Process.wait</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>UNKNOWN_VALUE</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#argv0-class_method" title="argv0 (class method)">.<strong>argv0</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the name of the script being executed.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#clock_getres-class_method" title="clock_getres (class method)">.<strong>clock_getres</strong>(clock_id, unit = ?)  &#x21d2; Float | Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the time resolution returned by POSIX clock_getres() function.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#clock_gettime-class_method" title="clock_gettime (class method)">.<strong>clock_gettime</strong>(clock_id, unit = ?)  &#x21d2; Float | Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a time returned by POSIX clock_gettime() function.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#daemon-class_method" title="daemon (class method)">.<strong>daemon</strong>(nochdir = ?, noclose = ?)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Detach the process from controlling terminal and run in the background as system daemon.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#detach-class_method" title="detach (class method)">.<strong>detach</strong>(pid)  &#x21d2; Thread </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Some operating systems retain the status of terminated child processes until the parent collects that status (normally using some variant of <code>wait()</code>).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#egid-class_method" title="egid (class method)">.<strong>egid</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the effective group ID for this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#egid=-class_method" title="egid= (class method)">.<strong>egid=</strong>(arg0)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the effective group ID for this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#euid-class_method" title="euid (class method)">.<strong>euid</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the effective user ID for this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#euid=-class_method" title="euid= (class method)">.<strong>euid=</strong>(arg0)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the effective user ID for this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#getpgid-class_method" title="getpgid (class method)">.<strong>getpgid</strong>(pid)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the process group ID for the given process id.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#getpgrp-class_method" title="getpgrp (class method)">.<strong>getpgrp</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the process group ID for this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#getpriority-class_method" title="getpriority (class method)">.<strong>getpriority</strong>(kind, arg0)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Gets the scheduling priority for specified process, process group, or user.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#getrlimit-class_method" title="getrlimit (class method)">.<strong>getrlimit</strong>(resource)  &#x21d2; [ Integer, Integer ] </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Gets the resource limit of the process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#getsid-class_method" title="getsid (class method)">.<strong>getsid</strong>(pid = ?)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the session ID for the given process id.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#gid-class_method" title="gid (class method)">.<strong>gid</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the (real) group ID for this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#gid=-class_method" title="gid= (class method)">.<strong>gid=</strong>(arg0)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the group ID for this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#groups-class_method" title="groups (class method)">.<strong>groups</strong>  &#x21d2; ::Array[Integer] </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Get an Array of the group IDs in the supplemental group access list for this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#groups=-class_method" title="groups= (class method)">.<strong>groups=</strong>(arg0)  &#x21d2; ::Array[Integer] </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Set the supplemental group access list to the given Array of group IDs.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initgroups-class_method" title="initgroups (class method)">.<strong>initgroups</strong>(username, gid)  &#x21d2; ::Array[Integer] </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Initializes the supplemental group access list by reading the system group database and using all groups of which the given user is a member.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#kill-class_method" title="kill (class method)">.<strong>kill</strong>(signal, *args)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sends the given signal to the specified process id(s) if <em>pid</em> is positive.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#maxgroups-class_method" title="maxgroups (class method)">.<strong>maxgroups</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the maximum number of gids allowed in the supplemental group access list.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#maxgroups=-class_method" title="maxgroups= (class method)">.<strong>maxgroups=</strong>(arg0)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the maximum number of gids allowed in the supplemental group access list.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pid-class_method" title="pid (class method)">.<strong>pid</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the process id of this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ppid-class_method" title="ppid (class method)">.<strong>ppid</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the process id of the parent of this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#setpgid-class_method" title="setpgid (class method)">.<strong>setpgid</strong>(pid, arg0)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the process group ID of <em>pid</em> (0 indicates this process) to <em>integer</em>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#setpriority-class_method" title="setpriority (class method)">.<strong>setpriority</strong>(kind, arg0, priority)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>See Process.getpriority.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#setproctitle-class_method" title="setproctitle (class method)">.<strong>setproctitle</strong>(arg0)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the process title that appears on the ps(1) command.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#setrlimit-class_method" title="setrlimit (class method)">.<strong>setrlimit</strong>(resource, cur_limit, max_limit = ?)  &#x21d2; nil </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the resource limit of the process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#setsid-class_method" title="setsid (class method)">.<strong>setsid</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Establishes this process as a new session and process group leader, with no controlling tty.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#times-class_method" title="times (class method)">.<strong>times</strong>  &#x21d2; Process::Tms </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a <code>Tms</code> structure (see Process::Tms) that contains user and system CPU times for this process, and also for children processes.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#uid-class_method" title="uid (class method)">.<strong>uid</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the (real) user ID of this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#uid=-class_method" title="uid= (class method)">.<strong>uid=</strong>(user)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the (user) user ID for this process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#wait-class_method" title="wait (class method)">.<strong>wait</strong>(pid = ?, flags = ?)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Waits for a child process to exit, returns its process id, and sets <code>$?</code> to a Process::Status object containing information on that process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#wait2-class_method" title="wait2 (class method)">.<strong>wait2</strong>(pid = ?, flags = ?)  &#x21d2; [ Integer, Process::Status ] </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Waits for a child process to exit (see Process::waitpid for exact semantics) and returns an array containing the process id and the exit status (a Process::Status object) of that child.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#waitall-class_method" title="waitall (class method)">.<strong>waitall</strong>  &#x21d2; ::Array[[ Integer, Process::Status ]] </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Waits for all children, returning an array of <em>pid</em>/<em>status</em> pairs (where <em>status</em> is a Process::Status object).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#waitpid-class_method" title="waitpid (class method)">.<strong>waitpid</strong>(pid = ?, flags = ?)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Waits for a child process to exit, returns its process id, and sets <code>$?</code> to a Process::Status object containing information on that process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#waitpid2-class_method" title="waitpid2 (class method)">.<strong>waitpid2</strong>(pid = ?, flags = ?)  &#x21d2; [ Integer, Process::Status ] </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Waits for a child process to exit (see Process::waitpid for exact semantics) and returns an array containing the process id and the exit status (a Process::Status object) of that child.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="argv0-class_method">
+  
+    .<strong>argv0</strong>  &#x21d2; <tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the name of the script being executed.  The value is not affected by
+assigning a new value to $0.</p>
+
+<p>This method first appeared in Ruby 2.1 to serve as a global variable free
+means to get the script name.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="clock_getres-class_method">
+  
+    .<strong>clock_getres</strong>(clock_id, unit = ?)  &#x21d2; <tt><span class='object_link'><a href="Float.html" title="Float (class)">Float</a></span> | <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the time resolution returned by POSIX clock_getres() function.</p>
+
+<p><code>clock_id</code> specifies a kind of clock. See the document of
+<code>Process.clock_gettime</code> for details.</p>
+
+<p><code>clock_id</code> can be a symbol as <code>Process.clock_gettime</code>. However the result may
+not be accurate. For example,
+<code>Process.clock_getres(:GETTIMEOFDAY_BASED_CLOCK_REALTIME)</code> returns 1.0e-06
+which means 1 microsecond, but actual resolution can be more coarse.</p>
+
+<p>If the given <code>clock_id</code> is not supported, Errno::EINVAL is raised.</p>
+
+<p><code>unit</code> specifies a type of the return value. <code>Process.clock_getres</code> accepts
+<code>unit</code> as <code>Process.clock_gettime</code>. The default value, <code>:float_second</code>, is also
+same as <code>Process.clock_gettime</code>.</p>
+
+<p><code>Process.clock_getres</code> also accepts <code>:hertz</code> as <code>unit</code>. <code>:hertz</code> means a the
+reciprocal of <code>:float_second</code>.</p>
+
+<p><code>:hertz</code> can be used to obtain the exact value of the clock ticks per second
+for times() function and CLOCKS_PER_SEC for clock() function.</p>
+
+<p><code>Process.clock_getres(:TIMES_BASED_CLOCK_PROCESS_CPUTIME_ID, :hertz)</code> returns
+the clock ticks per second.</p>
+
+<p><code>Process.clock_getres(:CLOCK_BASED_CLOCK_PROCESS_CPUTIME_ID, :hertz)</code> returns
+CLOCKS_PER_SEC.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_p'>p</span> <span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_clock_getres'>clock_getres</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#CLOCK_MONOTONIC-constant" title="Process::CLOCK_MONOTONIC (constant)">CLOCK_MONOTONIC</a></span></span><span class='rparen'>)</span>
+<span class='comment'>#=&gt; 1.0e-09
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>clock_id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span> | <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>unit</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Float.html" title="Float (class)">Float</a></span> | <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="clock_gettime-class_method">
+  
+    .<strong>clock_gettime</strong>(clock_id, unit = ?)  &#x21d2; <tt><span class='object_link'><a href="Float.html" title="Float (class)">Float</a></span> | <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a time returned by POSIX clock_gettime() function.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_p'>p</span> <span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_clock_gettime'>clock_gettime</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#CLOCK_MONOTONIC-constant" title="Process::CLOCK_MONOTONIC (constant)">CLOCK_MONOTONIC</a></span></span><span class='rparen'>)</span>
+<span class='comment'>#=&gt; 896053.968060096
+</span></code></pre>
+
+<p><code>clock_id</code> specifies a kind of clock. It is specified as a constant which
+begins with <code>Process::CLOCK_</code> such as Process::CLOCK_REALTIME and
+Process::CLOCK_MONOTONIC.</p>
+
+<p>The supported constants depends on OS and version. Ruby provides following
+types of <code>clock_id</code> if available.</p>
+
+<p>CLOCK_REALTIME
+:   SUSv2 to 4, Linux 2.5.63, FreeBSD 3.0, NetBSD 2.0, OpenBSD 2.1, macOS
+    10.12
+CLOCK_MONOTONIC
+:   SUSv3 to 4, Linux 2.5.63, FreeBSD 3.0, NetBSD 2.0, OpenBSD 3.4, macOS
+    10.12
+CLOCK_PROCESS_CPUTIME_ID
+:   SUSv3 to 4, Linux 2.5.63, FreeBSD 9.3, OpenBSD 5.4, macOS 10.12
+CLOCK_THREAD_CPUTIME_ID
+:   SUSv3 to 4, Linux 2.5.63, FreeBSD 7.1, OpenBSD 5.4, macOS 10.12
+CLOCK_VIRTUAL
+:   FreeBSD 3.0, OpenBSD 2.1
+CLOCK_PROF
+:   FreeBSD 3.0, OpenBSD 2.1
+CLOCK_REALTIME_FAST
+:   FreeBSD 8.1
+CLOCK_REALTIME_PRECISE
+:   FreeBSD 8.1
+CLOCK_REALTIME_COARSE
+:   Linux 2.6.32
+CLOCK_REALTIME_ALARM
+:   Linux 3.0
+CLOCK_MONOTONIC_FAST
+:   FreeBSD 8.1
+CLOCK_MONOTONIC_PRECISE
+:   FreeBSD 8.1
+CLOCK_MONOTONIC_COARSE
+:   Linux 2.6.32
+CLOCK_MONOTONIC_RAW
+:   Linux 2.6.28, macOS 10.12
+CLOCK_MONOTONIC_RAW_APPROX
+:   macOS 10.12
+CLOCK_BOOTTIME
+:   Linux 2.6.39
+CLOCK_BOOTTIME_ALARM
+:   Linux 3.0
+CLOCK_UPTIME
+:   FreeBSD 7.0, OpenBSD 5.5
+CLOCK_UPTIME_FAST
+:   FreeBSD 8.1
+CLOCK_UPTIME_RAW
+:   macOS 10.12
+CLOCK_UPTIME_RAW_APPROX
+:   macOS 10.12
+CLOCK_UPTIME_PRECISE
+:   FreeBSD 8.1
+CLOCK_SECOND
+:   FreeBSD 8.1
+CLOCK_TAI
+:   Linux 3.10</p>
+
+<p>Note that SUS stands for Single Unix Specification. SUS contains POSIX and
+clock_gettime is defined in the POSIX part. SUS defines CLOCK_REALTIME
+mandatory but CLOCK_MONOTONIC, CLOCK_PROCESS_CPUTIME_ID and
+CLOCK_THREAD_CPUTIME_ID are optional.</p>
+
+<p>Also, several symbols are accepted as <code>clock_id</code>. There are emulations for
+clock_gettime().</p>
+
+<p>For example, Process::CLOCK_REALTIME is defined as
+<code>:GETTIMEOFDAY_BASED_CLOCK_REALTIME</code> when clock_gettime() is not available.</p>
+
+<p>Emulations for <code>CLOCK_REALTIME</code>:
+:GETTIMEOFDAY_BASED_CLOCK_REALTIME
+:   Use gettimeofday() defined by SUS. (SUSv4 obsoleted it, though.) The
+    resolution is 1 microsecond.
+:TIME_BASED_CLOCK_REALTIME
+:   Use time() defined by ISO C. The resolution is 1 second.</p>
+
+<p>Emulations for <code>CLOCK_MONOTONIC</code>:
+:MACH_ABSOLUTE_TIME_BASED_CLOCK_MONOTONIC
+:   Use mach_absolute_time(), available on Darwin. The resolution is CPU
+    dependent.
+:TIMES_BASED_CLOCK_MONOTONIC
+:   Use the result value of times() defined by POSIX. POSIX defines it as
+    &quot;times() shall return the elapsed real time, in clock ticks, since an
+    arbitrary point in the past (for example, system start-up time)&quot;. For
+    example, GNU/Linux returns a value based on jiffies and it is monotonic.
+    However, 4.4BSD uses gettimeofday() and it is not monotonic. (FreeBSD uses
+    clock_gettime(CLOCK_MONOTONIC) instead, though.) The resolution is the
+    clock tick. &quot;getconf CLK_TCK&quot; command shows the clock ticks per second.
+    (The clock ticks per second is defined by HZ macro in older systems.) If
+    it is 100 and clock_t is 32 bits integer type, the resolution is 10
+    millisecond and cannot represent over 497 days.</p>
+
+<p>Emulations for <code>CLOCK_PROCESS_CPUTIME_ID</code>:
+:GETRUSAGE_BASED_CLOCK_PROCESS_CPUTIME_ID
+:   Use getrusage() defined by SUS. getrusage() is used with RUSAGE_SELF to
+    obtain the time only for the calling process (excluding the time for child
+    processes). The result is addition of user time (ru_utime) and system time
+    (ru_stime). The resolution is 1 microsecond.
+:TIMES_BASED_CLOCK_PROCESS_CPUTIME_ID
+:   Use times() defined by POSIX. The result is addition of user time
+    (tms_utime) and system time (tms_stime). tms_cutime and tms_cstime are
+    ignored to exclude the time for child processes. The resolution is the
+    clock tick. &quot;getconf CLK_TCK&quot; command shows the clock ticks per second.
+    (The clock ticks per second is defined by HZ macro in older systems.) If
+    it is 100, the resolution is 10 millisecond.
+:CLOCK_BASED_CLOCK_PROCESS_CPUTIME_ID
+:   Use clock() defined by ISO C. The resolution is 1/CLOCKS_PER_SEC.
+    CLOCKS_PER_SEC is the C-level macro defined by time.h. SUS defines
+    CLOCKS_PER_SEC is 1000000. Non-Unix systems may define it a different
+    value, though. If CLOCKS_PER_SEC is 1000000 as SUS, the resolution is 1
+    microsecond. If CLOCKS_PER_SEC is 1000000 and clock_t is 32 bits integer
+    type, it cannot represent over 72 minutes.</p>
+
+<p>If the given <code>clock_id</code> is not supported, Errno::EINVAL is raised.</p>
+
+<p><code>unit</code> specifies a type of the return value.</p>
+
+<p>:float_second
+:   number of seconds as a float (default)
+:float_millisecond
+:   number of milliseconds as a float
+:float_microsecond
+:   number of microseconds as a float
+:second
+:   number of seconds as an integer
+:millisecond
+:   number of milliseconds as an integer
+:microsecond
+:   number of microseconds as an integer
+:nanosecond
+:   number of nanoseconds as an integer</p>
+
+<p>The underlying function, clock_gettime(), returns a number of nanoseconds.
+Float object (IEEE 754 double) is not enough to represent the return value for
+CLOCK_REALTIME. If the exact nanoseconds value is required, use <code>:nanoseconds</code>
+as the <code>unit</code>.</p>
+
+<p>The origin (zero) of the returned value varies. For example, system start up
+time, process start up time, the Epoch, etc.</p>
+
+<p>The origin in CLOCK_REALTIME is defined as the Epoch (1970-01-01 00:00:00
+UTC). But some systems count leap seconds and others doesn&#39;t. So the result
+can be interpreted differently across systems. Time.now is recommended over
+CLOCK_REALTIME.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>clock_id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span> | <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>unit</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Float.html" title="Float (class)">Float</a></span> | <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="daemon-class_method">
+  
+    .<strong>daemon</strong>(nochdir = ?, noclose = ?)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Detach the process from controlling terminal and run in the background as
+system daemon.  Unless the argument nochdir is true (i.e. non false), it
+changes the current working directory to the root (&quot;/&quot;). Unless the argument
+noclose is true, daemon() will redirect standard input, standard output and
+standard error to /dev/null. Return zero on success, or raise one of Errno::*.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>nochdir</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>noclose</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="detach-class_method">
+  
+    .<strong>detach</strong>(pid)  &#x21d2; <tt><span class='object_link'><a href="Thread.html" title="Thread (class)">Thread</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Some operating systems retain the status of terminated child processes until
+the parent collects that status (normally using some variant of <code>wait()</code>). If
+the parent never collects this status, the child stays around as a <em>zombie</em>
+process. Process::detach prevents this by setting up a separate Ruby thread
+whose sole job is to reap the status of the process <em>pid</em> when it terminates.
+Use #detach only when you do not intend to explicitly wait for the child to
+terminate.</p>
+
+<p>The waiting thread returns the exit status of the detached process when it
+terminates, so you can use Thread#join to know the result.  If specified <em>pid</em>
+is not a valid child process ID, the thread returns <code>nil</code> immediately.</p>
+
+<p>The waiting thread has #pid method which returns the pid.</p>
+
+<p>In this first example, we don&#39;t reap the first child process, so it appears as
+a zombie in the process status display.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_p1'>p1</span> <span class='op'>=</span> <span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_sleep'>sleep</span> <span class='float'>0.1</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_p2'>p2</span> <span class='op'>=</span> <span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_sleep'>sleep</span> <span class='float'>0.2</span> <span class='rbrace'>}</span>
+<span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_waitpid'><span class='object_link'><a href="#waitpid-class_method" title="Process.waitpid (method)">waitpid</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_p2'>p2</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_sleep'>sleep</span> <span class='int'>2</span>
+<span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ps -ho pid,state -p </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_p1'>p1</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<p><em>produces:</em></p>
+
+<pre class="code ruby"><code class="ruby">27389 Z
+</code></pre>
+
+<p>In the next example, Process::detach is used to reap the child automatically.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_p1'>p1</span> <span class='op'>=</span> <span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_sleep'>sleep</span> <span class='float'>0.1</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_p2'>p2</span> <span class='op'>=</span> <span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_sleep'>sleep</span> <span class='float'>0.2</span> <span class='rbrace'>}</span>
+<span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_detach'>detach</span><span class='lparen'>(</span><span class='id identifier rubyid_p1'>p1</span><span class='rparen'>)</span>
+<span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_waitpid'><span class='object_link'><a href="#waitpid-class_method" title="Process.waitpid (method)">waitpid</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_p2'>p2</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_sleep'>sleep</span> <span class='int'>2</span>
+<span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ps -ho pid,state -p </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_p1'>p1</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<p><em>(produces no output)</em></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>pid</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Thread.html" title="Thread (class)">Thread</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="egid-class_method">
+  
+    .<strong>egid</strong>  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the effective group ID for this process. Not available on all
+platforms.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_egid'>egid</span>   <span class='comment'>#=&gt; 500
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="egid=-class_method">
+  
+    .<strong>egid=</strong>(arg0)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the effective group ID for this process. Not available on all platforms.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>arg0</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="euid-class_method">
+  
+    .<strong>euid</strong>  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the effective user ID for this process.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_euid'>euid</span>   <span class='comment'>#=&gt; 501
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="euid=-class_method">
+  
+    .<strong>euid=</strong>(arg0)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the effective user ID for this process. Not available on all platforms.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>arg0</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="getpgid-class_method">
+  
+    .<strong>getpgid</strong>(pid)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the process group ID for the given process id. Not available on all
+platforms.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_getpgid'>getpgid</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_ppid'><span class='object_link'><a href="#ppid-class_method" title="Process.ppid (method)">ppid</a></span></span><span class='lparen'>(</span><span class='rparen'>)</span><span class='rparen'>)</span>   <span class='comment'>#=&gt; 25527
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>pid</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="getpgrp-class_method">
+  
+    .<strong>getpgrp</strong>  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the process group ID for this process. Not available on all platforms.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_getpgid'><span class='object_link'><a href="#getpgid-class_method" title="Process.getpgid (method)">getpgid</a></span></span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span>   <span class='comment'>#=&gt; 25527
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_getpgrp'>getpgrp</span>      <span class='comment'>#=&gt; 25527
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="getpriority-class_method">
+  
+    .<strong>getpriority</strong>(kind, arg0)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Gets the scheduling priority for specified process, process group, or user.
+<em>kind</em> indicates the kind of entity to find: one of Process::PRIO_PGRP,
+Process::PRIO_USER, or Process::PRIO_PROCESS. <em>integer</em> is an id indicating
+the particular process, process group, or user (an id of 0 means <em>current</em>).
+Lower priorities are more favorable for scheduling. Not available on all
+platforms.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_getpriority'>getpriority</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#PRIO_USER-constant" title="Process::PRIO_USER (constant)">PRIO_USER</a></span></span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>      <span class='comment'>#=&gt; 19
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_getpriority'>getpriority</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#PRIO_PROCESS-constant" title="Process::PRIO_PROCESS (constant)">PRIO_PROCESS</a></span></span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>   <span class='comment'>#=&gt; 19
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>kind</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>arg0</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="getrlimit-class_method">
+  
+    .<strong>getrlimit</strong>(resource)  &#x21d2; <tt>[ <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>, <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span> ]</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Gets the resource limit of the process. <em>cur_limit</em> means current (soft) limit
+and <em>max_limit</em> means maximum (hard) limit.</p>
+
+<p><em>resource</em> indicates the kind of resource to limit. It is specified as a
+symbol such as <code>:CORE</code>, a string such as <code>&quot;CORE&quot;</code> or a constant such as
+Process::RLIMIT_CORE. See Process.setrlimit for details.</p>
+
+<p><em>cur_limit</em> and <em>max_limit</em> may be Process::RLIM_INFINITY,
+Process::RLIM_SAVED_MAX or Process::RLIM_SAVED_CUR. See Process.setrlimit and
+the system getrlimit(2) manual for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>resource</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span> | <span class='object_link'><a href="String.html" title="String (class)">String</a></span> | <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>[ <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>, <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span> ]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="getsid-class_method">
+  
+    .<strong>getsid</strong>(pid = ?)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the session ID for the given process id. If not given, return current
+process sid. Not available on all platforms.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_getsid'>getsid</span><span class='lparen'>(</span><span class='rparen'>)</span>                <span class='comment'>#=&gt; 27422
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_getsid'>getsid</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span>               <span class='comment'>#=&gt; 27422
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_getsid'>getsid</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pid'><span class='object_link'><a href="#pid-class_method" title="Process.pid (method)">pid</a></span></span><span class='lparen'>(</span><span class='rparen'>)</span><span class='rparen'>)</span>   <span class='comment'>#=&gt; 27422
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>pid</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="gid-class_method">
+  
+    .<strong>gid</strong>  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the (real) group ID for this process.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_gid'>gid</span>   <span class='comment'>#=&gt; 500
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="gid=-class_method">
+  
+    .<strong>gid=</strong>(arg0)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the group ID for this process.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>arg0</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="groups-class_method">
+  
+    .<strong>groups</strong>  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[<span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>]</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Get an Array of the group IDs in the supplemental group access list for this
+process.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_groups'>groups</span>   <span class='comment'>#=&gt; [27, 6, 10, 11]
+</span></code></pre>
+
+<p>Note that this method is just a wrapper of getgroups(2). This means that the
+following characteristics of the result completely depend on your system:</p>
+
+<ul>
+<li>  the result is sorted</li>
+<li>  the result includes effective GIDs</li>
+<li>  the result does not include duplicated GIDs</li>
+</ul>
+
+<p>You can make sure to get a sorted unique GID list of the current process by
+this expression:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[<span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="groups=-class_method">
+  
+    .<strong>groups=</strong>(arg0)  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[<span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>]</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Set the supplemental group access list to the given Array of group IDs.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_groups'><span class='object_link'><a href="#groups-class_method" title="Process.groups (method)">groups</a></span></span>   <span class='comment'>#=&gt; [0, 1, 2, 3, 4, 6, 10, 11, 20, 26, 27]
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_groups'><span class='object_link'><a href="#groups-class_method" title="Process.groups (method)">groups</a></span></span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>27</span><span class='comma'>,</span> <span class='int'>6</span><span class='comma'>,</span> <span class='int'>10</span><span class='comma'>,</span> <span class='int'>11</span><span class='rbracket'>]</span>   <span class='comment'>#=&gt; [27, 6, 10, 11]
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_groups'><span class='object_link'><a href="#groups-class_method" title="Process.groups (method)">groups</a></span></span>   <span class='comment'>#=&gt; [27, 6, 10, 11]
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>arg0</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[<span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[<span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="initgroups-class_method">
+  
+    .<strong>initgroups</strong>(username, gid)  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[<span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>]</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Initializes the supplemental group access list by reading the system group
+database and using all groups of which the given user is a member. The group
+with the specified <em>gid</em> is also added to the list. Returns the resulting
+Array of the gids of all the groups in the supplementary group access list.
+Not available on all platforms.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_groups'><span class='object_link'><a href="#groups-class_method" title="Process.groups (method)">groups</a></span></span>   <span class='comment'>#=&gt; [0, 1, 2, 3, 4, 6, 10, 11, 20, 26, 27]
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_initgroups'>initgroups</span><span class='lparen'>(</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mgranger</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>30</span> <span class='rparen'>)</span>   <span class='comment'>#=&gt; [30, 6, 10, 11]
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_groups'><span class='object_link'><a href="#groups-class_method" title="Process.groups (method)">groups</a></span></span>   <span class='comment'>#=&gt; [30, 6, 10, 11]
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>username</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>gid</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[<span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="kill-class_method">
+  
+    .<strong>kill</strong>(signal, *args)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sends the given signal to the specified process id(s) if <em>pid</em> is positive. If
+<em>pid</em> is zero, <em>signal</em> is sent to all processes whose group ID is equal to
+the group ID of the process. If <em>pid</em> is negative, results are dependent on
+the operating system. <em>signal</em> may be an integer signal number or a POSIX
+signal name (either with or without a <code>SIG</code> prefix). If <em>signal</em> is negative
+(or starts with a minus sign), kills process groups instead of processes. Not
+all signals are available on all platforms. The keys and values of Signal.list
+are known signal names and numbers, respectively.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_pid'>pid</span> <span class='op'>=</span> <span class='id identifier rubyid_fork'>fork</span> <span class='kw'>do</span>
+   <span class='const'><span class='object_link'><a href="Signal.html" title="Signal (module)">Signal</a></span></span><span class='period'>.</span><span class='id identifier rubyid_trap'><span class='object_link'><a href="Signal.html#trap-class_method" title="Signal.trap (method)">trap</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HUP</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ouch!</span><span class='tstring_end'>&quot;</span></span><span class='semicolon'>;</span> <span class='id identifier rubyid_exit'>exit</span> <span class='rbrace'>}</span>
+   <span class='comment'># ... do some work ...
+</span><span class='kw'>end</span>
+<span class='comment'># ...
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_kill'>kill</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HUP</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_pid'>pid</span><span class='rparen'>)</span>
+<span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wait'><span class='object_link'><a href="#wait-class_method" title="Process.wait (method)">wait</a></span></span>
+</code></pre>
+
+<p><em>produces:</em></p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_Ouch!'>Ouch!</span>
+</code></pre>
+
+<p>If <em>signal</em> is an integer but wrong for signal, Errno::EINVAL or RangeError
+will be raised.  Otherwise unless <em>signal</em> is a String or a Symbol, and a
+known signal name, ArgumentError will be raised.</p>
+
+<p>Also, Errno::ESRCH or RangeError for invalid <em>pid</em>, Errno::EPERM when failed
+because of no privilege, will be raised.  In these cases, signals may have
+been sent to preceding processes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>signal</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span> | <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span> | <span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="maxgroups-class_method">
+  
+    .<strong>maxgroups</strong>  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the maximum number of gids allowed in the supplemental group access
+list.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_maxgroups'>maxgroups</span>   <span class='comment'>#=&gt; 32
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="maxgroups=-class_method">
+  
+    .<strong>maxgroups=</strong>(arg0)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the maximum number of gids allowed in the supplemental group access list.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>arg0</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pid-class_method">
+  
+    .<strong>pid</strong>  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the process id of this process. Not available on all platforms.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pid'>pid</span>   <span class='comment'>#=&gt; 27415
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="ppid-class_method">
+  
+    .<strong>ppid</strong>  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the process id of the parent of this process. Returns untrustworthy
+value on Win32/64. Not available on all platforms.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>I am </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pid'><span class='object_link'><a href="#pid-class_method" title="Process.pid (method)">pid</a></span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Dad is </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_ppid'>ppid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+</code></pre>
+
+<p><em>produces:</em></p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>I</span> <span class='id identifier rubyid_am'>am</span> <span class='int'>27417</span>
+<span class='const'>Dad</span> <span class='id identifier rubyid_is'>is</span> <span class='int'>27417</span>
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="setpgid-class_method">
+  
+    .<strong>setpgid</strong>(pid, arg0)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the process group ID of <em>pid</em> (0 indicates this process) to <em>integer</em>.
+Not available on all platforms.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>pid</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>arg0</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="setpriority-class_method">
+  
+    .<strong>setpriority</strong>(kind, arg0, priority)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>See Process.getpriority.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_setpriority'>setpriority</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#PRIO_USER-constant" title="Process::PRIO_USER (constant)">PRIO_USER</a></span></span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>19</span><span class='rparen'>)</span>      <span class='comment'>#=&gt; 0
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_setpriority'>setpriority</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#PRIO_PROCESS-constant" title="Process::PRIO_PROCESS (constant)">PRIO_PROCESS</a></span></span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>19</span><span class='rparen'>)</span>   <span class='comment'>#=&gt; 0
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_getpriority'><span class='object_link'><a href="#getpriority-class_method" title="Process.getpriority (method)">getpriority</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#PRIO_USER-constant" title="Process::PRIO_USER (constant)">PRIO_USER</a></span></span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>          <span class='comment'>#=&gt; 19
+</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_getpriority'><span class='object_link'><a href="#getpriority-class_method" title="Process.getpriority (method)">getpriority</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#PRIO_PROCESS-constant" title="Process::PRIO_PROCESS (constant)">PRIO_PROCESS</a></span></span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>       <span class='comment'>#=&gt; 19
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>kind</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>arg0</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>priority</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="setproctitle-class_method">
+  
+    .<strong>setproctitle</strong>(arg0)  &#x21d2; <tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the process title that appears on the ps(1) command.  Not necessarily
+effective on all platforms.  No exception will be raised regardless of the
+result, nor will NotImplementedError be raised even if the platform does not
+support the feature.</p>
+
+<p>Calling this method does not affect the value of $0.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_setproctitle'>setproctitle</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>myapp: worker #%d</span><span class='tstring_end'>&#39;</span></span> <span class='op'>%</span> <span class='id identifier rubyid_worker_id'>worker_id</span><span class='rparen'>)</span>
+</code></pre>
+
+<p>This method first appeared in Ruby 2.1 to serve as a global variable free
+means to change the process title.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>arg0</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="setrlimit-class_method">
+  
+    .<strong>setrlimit</strong>(resource, cur_limit, max_limit = ?)  &#x21d2; <tt>nil</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the resource limit of the process. <em>cur_limit</em> means current (soft) limit
+and <em>max_limit</em> means maximum (hard) limit.</p>
+
+<p>If <em>max_limit</em> is not given, <em>cur_limit</em> is used.</p>
+
+<p><em>resource</em> indicates the kind of resource to limit. It should be a symbol such
+as <code>:CORE</code>, a string such as <code>&quot;CORE&quot;</code> or a constant such as
+Process::RLIMIT_CORE. The available resources are OS dependent. Ruby may
+support following resources.</p>
+
+<p>AS
+:   total available memory (bytes) (SUSv3, NetBSD, FreeBSD, OpenBSD but
+    4.4BSD-Lite)
+CORE
+:   core size (bytes) (SUSv3)
+CPU
+:   CPU time (seconds) (SUSv3)
+DATA
+:   data segment (bytes) (SUSv3)
+FSIZE
+:   file size (bytes) (SUSv3)
+MEMLOCK
+:   total size for mlock(2) (bytes) (4.4BSD, GNU/Linux)
+MSGQUEUE
+:   allocation for POSIX message queues (bytes) (GNU/Linux)
+NICE
+:   ceiling on process&#39;s nice(2) value (number) (GNU/Linux)
+NOFILE
+:   file descriptors (number) (SUSv3)
+NPROC
+:   number of processes for the user (number) (4.4BSD, GNU/Linux)
+RSS
+:   resident memory size (bytes) (4.2BSD, GNU/Linux)
+RTPRIO
+:   ceiling on the process&#39;s real-time priority (number) (GNU/Linux)
+RTTIME
+:   CPU time for real-time process (us) (GNU/Linux)
+SBSIZE
+:   all socket buffers (bytes) (NetBSD, FreeBSD)
+SIGPENDING
+:   number of queued signals allowed (signals) (GNU/Linux)
+STACK
+:   stack size (bytes) (SUSv3)</p>
+
+<p><em>cur_limit</em> and <em>max_limit</em> may be <code>:INFINITY</code>, <code>&quot;INFINITY&quot;</code> or
+Process::RLIM_INFINITY, which means that the resource is not limited. They may
+be Process::RLIM_SAVED_MAX, Process::RLIM_SAVED_CUR and corresponding symbols
+and strings too. See system setrlimit(2) manual for details.</p>
+
+<p>The following example raises the soft limit of core size to the hard limit to
+try to make core dump possible.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_setrlimit'>setrlimit</span><span class='lparen'>(</span><span class='symbol'>:CORE</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_getrlimit'><span class='object_link'><a href="#getrlimit-class_method" title="Process.getrlimit (method)">getrlimit</a></span></span><span class='lparen'>(</span><span class='symbol'>:CORE</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>resource</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span> | <span class='object_link'><a href="String.html" title="String (class)">String</a></span> | <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>cur_limit</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>max_limit</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="setsid-class_method">
+  
+    .<strong>setsid</strong>  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Establishes this process as a new session and process group leader, with no
+controlling tty. Returns the session id. Not available on all platforms.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_setsid'>setsid</span>   <span class='comment'>#=&gt; 27422
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="times-class_method">
+  
+    .<strong>times</strong>  &#x21d2; <tt><span class='object_link'><a href="Process/Tms.html" title="Process::Tms (class)">Process::Tms</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a <code>Tms</code> structure (see Process::Tms) that contains user and system CPU
+times for this process, and also for children processes.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_t'>t</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span>
+<span class='lbracket'>[</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_utime'>utime</span><span class='comma'>,</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_stime'>stime</span><span class='comma'>,</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_cutime'>cutime</span><span class='comma'>,</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_cstime'>cstime</span> <span class='rbracket'>]</span>   <span class='comment'>#=&gt; [0.0, 0.02, 0.00, 0.00]
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Process/Tms.html" title="Process::Tms (class)">Process::Tms</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="uid-class_method">
+  
+    .<strong>uid</strong>  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the (real) user ID of this process.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_uid'>uid</span>   <span class='comment'>#=&gt; 501
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="uid=-class_method">
+  
+    .<strong>uid=</strong>(user)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the (user) user ID for this process. Not available on all platforms.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>user</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="wait-class_method">
+  
+    .<strong>wait</strong>(pid = ?, flags = ?)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Waits for a child process to exit, returns its process id, and sets <code>$?</code> to a
+Process::Status object containing information on that process. Which child it
+waits on depends on the value of <em>pid</em>:</p>
+
+<blockquote>
+<p>0
+:   Waits for the child whose process ID equals <em>pid</em>.</p>
+</blockquote>
+
+<p>0
+:   Waits for any child whose process group ID equals that of the calling
+    process.</p>
+
+<p>-1
+:   Waits for any child process (the default if no <em>pid</em> is given).</p>
+
+<p>&lt; -1
+:   Waits for any child whose process group ID equals the absolute value of
+    <em>pid</em>.</p>
+
+<p>The <em>flags</em> argument may be a logical or of the flag values Process::WNOHANG
+(do not block if no child available) or Process::WUNTRACED (return stopped
+children that haven&#39;t been reported). Not all flags are available on all
+platforms, but a flag value of zero will work on all platforms.</p>
+
+<p>Calling this method raises a SystemCallError if there are no child processes.
+Not available on all platforms.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span>
+<span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_exit'>exit</span> <span class='int'>99</span> <span class='rbrace'>}</span>                 <span class='comment'>#=&gt; 27429
+</span><span class='id identifier rubyid_wait'>wait</span>                             <span class='comment'>#=&gt; 27429
+</span><span class='gvar'>$?</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span>                    <span class='comment'>#=&gt; 99
+</span>
+<span class='id identifier rubyid_pid'>pid</span> <span class='op'>=</span> <span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_sleep'>sleep</span> <span class='int'>3</span> <span class='rbrace'>}</span>           <span class='comment'>#=&gt; 27440
+</span><span class='const'><span class='object_link'><a href="Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'><span class='object_link'><a href="Time.html#now-class_method" title="Time.now (method)">now</a></span></span>                         <span class='comment'>#=&gt; 2008-03-08 19:56:16 +0900
+</span><span class='id identifier rubyid_waitpid'>waitpid</span><span class='lparen'>(</span><span class='id identifier rubyid_pid'>pid</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#WNOHANG-constant" title="Process::WNOHANG (constant)">WNOHANG</a></span></span><span class='rparen'>)</span>   <span class='comment'>#=&gt; nil
+</span><span class='const'><span class='object_link'><a href="Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'><span class='object_link'><a href="Time.html#now-class_method" title="Time.now (method)">now</a></span></span>                         <span class='comment'>#=&gt; 2008-03-08 19:56:16 +0900
+</span><span class='id identifier rubyid_waitpid'>waitpid</span><span class='lparen'>(</span><span class='id identifier rubyid_pid'>pid</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>                  <span class='comment'>#=&gt; 27440
+</span><span class='const'><span class='object_link'><a href="Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'><span class='object_link'><a href="Time.html#now-class_method" title="Time.now (method)">now</a></span></span>                         <span class='comment'>#=&gt; 2008-03-08 19:56:19 +0900
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>pid</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>flags</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="wait2-class_method">
+  
+    .<strong>wait2</strong>(pid = ?, flags = ?)  &#x21d2; <tt>[ <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>, <span class='object_link'><a href="Process/Status.html" title="Process::Status (class)">Process::Status</a></span> ]</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Waits for a child process to exit (see Process::waitpid for exact semantics)
+and returns an array containing the process id and the exit status (a
+Process::Status object) of that child. Raises a SystemCallError if there are
+no child processes.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_exit'>exit</span> <span class='int'>99</span> <span class='rbrace'>}</span>   <span class='comment'>#=&gt; 27437
+</span><span class='id identifier rubyid_pid'>pid</span><span class='comma'>,</span> <span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wait2'>wait2</span>
+<span class='id identifier rubyid_pid'>pid</span>                        <span class='comment'>#=&gt; 27437
+</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span>          <span class='comment'>#=&gt; 99
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>pid</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>flags</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>[ <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>, <span class='object_link'><a href="Process/Status.html" title="Process::Status (class)">Process::Status</a></span> ]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="waitall-class_method">
+  
+    .<strong>waitall</strong>  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[[ <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>, <span class='object_link'><a href="Process/Status.html" title="Process::Status (class)">Process::Status</a></span> ]]</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Waits for all children, returning an array of <em>pid</em>/<em>status</em> pairs (where
+<em>status</em> is a Process::Status object).</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_sleep'>sleep</span> <span class='float'>0.2</span><span class='semicolon'>;</span> <span class='id identifier rubyid_exit'>exit</span> <span class='int'>2</span> <span class='rbrace'>}</span>   <span class='comment'>#=&gt; 27432
+</span><span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_sleep'>sleep</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_exit'>exit</span> <span class='int'>1</span> <span class='rbrace'>}</span>   <span class='comment'>#=&gt; 27433
+</span><span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span>            <span class='id identifier rubyid_exit'>exit</span> <span class='int'>0</span> <span class='rbrace'>}</span>   <span class='comment'>#=&gt; 27434
+</span><span class='id identifier rubyid_p'>p</span> <span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_waitall'>waitall</span>
+</code></pre>
+
+<p><em>produces</em>:</p>
+
+<pre class="code ruby"><code class="ruby">[[30982, #&lt;Process::Status: pid 30982 exit 0&gt;],
+ [30979, #&lt;Process::Status: pid 30979 exit 1&gt;],
+ [30976, #&lt;Process::Status: pid 30976 exit 2&gt;]]
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Array.html" title="Array (class)">::Array</a></span>[[ <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>, <span class='object_link'><a href="Process/Status.html" title="Process::Status (class)">Process::Status</a></span> ]]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="waitpid-class_method">
+  
+    .<strong>waitpid</strong>(pid = ?, flags = ?)  &#x21d2; <tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Waits for a child process to exit, returns its process id, and sets <code>$?</code> to a
+Process::Status object containing information on that process. Which child it
+waits on depends on the value of <em>pid</em>:</p>
+
+<blockquote>
+<p>0
+:   Waits for the child whose process ID equals <em>pid</em>.</p>
+</blockquote>
+
+<p>0
+:   Waits for any child whose process group ID equals that of the calling
+    process.</p>
+
+<p>-1
+:   Waits for any child process (the default if no <em>pid</em> is given).</p>
+
+<p>&lt; -1
+:   Waits for any child whose process group ID equals the absolute value of
+    <em>pid</em>.</p>
+
+<p>The <em>flags</em> argument may be a logical or of the flag values Process::WNOHANG
+(do not block if no child available) or Process::WUNTRACED (return stopped
+children that haven&#39;t been reported). Not all flags are available on all
+platforms, but a flag value of zero will work on all platforms.</p>
+
+<p>Calling this method raises a SystemCallError if there are no child processes.
+Not available on all platforms.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span>
+<span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_exit'>exit</span> <span class='int'>99</span> <span class='rbrace'>}</span>                 <span class='comment'>#=&gt; 27429
+</span><span class='id identifier rubyid_wait'>wait</span>                             <span class='comment'>#=&gt; 27429
+</span><span class='gvar'>$?</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span>                    <span class='comment'>#=&gt; 99
+</span>
+<span class='id identifier rubyid_pid'>pid</span> <span class='op'>=</span> <span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_sleep'>sleep</span> <span class='int'>3</span> <span class='rbrace'>}</span>           <span class='comment'>#=&gt; 27440
+</span><span class='const'><span class='object_link'><a href="Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'><span class='object_link'><a href="Time.html#now-class_method" title="Time.now (method)">now</a></span></span>                         <span class='comment'>#=&gt; 2008-03-08 19:56:16 +0900
+</span><span class='id identifier rubyid_waitpid'>waitpid</span><span class='lparen'>(</span><span class='id identifier rubyid_pid'>pid</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#WNOHANG-constant" title="Process::WNOHANG (constant)">WNOHANG</a></span></span><span class='rparen'>)</span>   <span class='comment'>#=&gt; nil
+</span><span class='const'><span class='object_link'><a href="Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'><span class='object_link'><a href="Time.html#now-class_method" title="Time.now (method)">now</a></span></span>                         <span class='comment'>#=&gt; 2008-03-08 19:56:16 +0900
+</span><span class='id identifier rubyid_waitpid'>waitpid</span><span class='lparen'>(</span><span class='id identifier rubyid_pid'>pid</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>                  <span class='comment'>#=&gt; 27440
+</span><span class='const'><span class='object_link'><a href="Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'><span class='object_link'><a href="Time.html#now-class_method" title="Time.now (method)">now</a></span></span>                         <span class='comment'>#=&gt; 2008-03-08 19:56:19 +0900
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>pid</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>flags</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="waitpid2-class_method">
+  
+    .<strong>waitpid2</strong>(pid = ?, flags = ?)  &#x21d2; <tt>[ <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>, <span class='object_link'><a href="Process/Status.html" title="Process::Status (class)">Process::Status</a></span> ]</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Waits for a child process to exit (see Process::waitpid for exact semantics)
+and returns an array containing the process id and the exit status (a
+Process::Status object) of that child. Raises a SystemCallError if there are
+no child processes.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fork'>fork</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_exit'>exit</span> <span class='int'>99</span> <span class='rbrace'>}</span>   <span class='comment'>#=&gt; 27437
+</span><span class='id identifier rubyid_pid'>pid</span><span class='comma'>,</span> <span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Process (module)">Process</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wait2'><span class='object_link'><a href="#wait2-class_method" title="Process.wait2 (method)">wait2</a></span></span>
+<span class='id identifier rubyid_pid'>pid</span>                        <span class='comment'>#=&gt; 27437
+</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span>          <span class='comment'>#=&gt; 99
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>pid</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>flags</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>?</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>[ <span class='object_link'><a href="Integer.html" title="Integer (class)">Integer</a></span>, <span class='object_link'><a href="Process/Status.html" title="Process::Status (class)">Process::Status</a></span> ]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Dec 25 20:29:24 2020 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.25 (ruby-2.6.5).
+</div>
+
+    </div>
+  </body>
+</html>

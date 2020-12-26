@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Errno
+  
+    &mdash; Documentation by YARD 0.9.25
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Errno";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (E)</a> &raquo;
+    
+    
+    <span class="title">Errno</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: Errno
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>core/errno.rbs</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Ruby exception objects are subclasses of Exception.  However, operating
+systems typically report errors using plain integers. Module Errno is created
+dynamically to map these operating system errors to Ruby classes, with each
+error number generating its own subclass of SystemCallError.  As the subclass
+is created in module Errno, its name will start <code>Errno::</code>.</p>
+
+<p>The names of the <code>Errno::</code> classes depend on the environment in which Ruby
+runs. On a typical Unix or Windows platform, there are Errno classes such as
+Errno::EACCES, Errno::EAGAIN, Errno::EINTR, and so on.</p>
+
+<p>The integer operating system error number corresponding to a particular error
+is available as the class constant <code>Errno::</code><em>error</em><code>::Errno</code>.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Errno</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Errno/EACCES.html" title="Errno::EACCES (class)">EACCES</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Errno/EACCES.html#Errno-constant" title="Errno::EACCES::Errno (constant)">Errno</a></span></span>   <span class='comment'>#=&gt; 13
+</span><span class='const'>Errno</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Errno/EAGAIN.html" title="Errno::EAGAIN (class)">EAGAIN</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Errno/EAGAIN.html#Errno-constant" title="Errno::EAGAIN::Errno (constant)">Errno</a></span></span>   <span class='comment'>#=&gt; 11
+</span><span class='const'>Errno</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Errno/EINTR.html" title="Errno::EINTR (class)">EINTR</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Errno/EINTR.html#Errno-constant" title="Errno::EINTR::Errno (constant)">Errno</a></span></span>    <span class='comment'>#=&gt; 4
+</span></code></pre>
+
+<p>The full list of operating system errors on your particular platform are
+available as the constants of Errno.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Errno</span><span class='period'>.</span><span class='id identifier rubyid_constants'>constants</span>   <span class='comment'>#=&gt; :E2BIG, :EACCES, :EADDRINUSE, :EADDRNOTAVAIL, ...
+</span></code></pre>
+
+<p>System call error module used by webrick for cross platform compatibility.</p>
+
+<p>EPROTO
+:   protocol error
+ECONNRESET
+:   remote host reset the connection request
+ECONNABORTED
+:   Client sent TCP reset (RST) before server has accepted the connection
+    requested by client.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Errno/E2BIG.html" title="Errno::E2BIG (class)">E2BIG</a></span>, <span class='object_link'><a href="Errno/EACCES.html" title="Errno::EACCES (class)">EACCES</a></span>, <span class='object_link'><a href="Errno/EADDRINUSE.html" title="Errno::EADDRINUSE (class)">EADDRINUSE</a></span>, <span class='object_link'><a href="Errno/EADDRNOTAVAIL.html" title="Errno::EADDRNOTAVAIL (class)">EADDRNOTAVAIL</a></span>, <span class='object_link'><a href="Errno/EADV.html" title="Errno::EADV (class)">EADV</a></span>, <span class='object_link'><a href="Errno/EAFNOSUPPORT.html" title="Errno::EAFNOSUPPORT (class)">EAFNOSUPPORT</a></span>, <span class='object_link'><a href="Errno/EAGAIN.html" title="Errno::EAGAIN (class)">EAGAIN</a></span>, <span class='object_link'><a href="Errno/EALREADY.html" title="Errno::EALREADY (class)">EALREADY</a></span>, <span class='object_link'><a href="Errno/EAUTH.html" title="Errno::EAUTH (class)">EAUTH</a></span>, <span class='object_link'><a href="Errno/EBADE.html" title="Errno::EBADE (class)">EBADE</a></span>, <span class='object_link'><a href="Errno/EBADF.html" title="Errno::EBADF (class)">EBADF</a></span>, <span class='object_link'><a href="Errno/EBADFD.html" title="Errno::EBADFD (class)">EBADFD</a></span>, <span class='object_link'><a href="Errno/EBADMSG.html" title="Errno::EBADMSG (class)">EBADMSG</a></span>, <span class='object_link'><a href="Errno/EBADR.html" title="Errno::EBADR (class)">EBADR</a></span>, <span class='object_link'><a href="Errno/EBADRPC.html" title="Errno::EBADRPC (class)">EBADRPC</a></span>, <span class='object_link'><a href="Errno/EBADRQC.html" title="Errno::EBADRQC (class)">EBADRQC</a></span>, <span class='object_link'><a href="Errno/EBADSLT.html" title="Errno::EBADSLT (class)">EBADSLT</a></span>, <span class='object_link'><a href="Errno/EBFONT.html" title="Errno::EBFONT (class)">EBFONT</a></span>, <span class='object_link'><a href="Errno/EBUSY.html" title="Errno::EBUSY (class)">EBUSY</a></span>, <span class='object_link'><a href="Errno/ECANCELED.html" title="Errno::ECANCELED (class)">ECANCELED</a></span>, <span class='object_link'><a href="Errno/ECAPMODE.html" title="Errno::ECAPMODE (class)">ECAPMODE</a></span>, <span class='object_link'><a href="Errno/ECHILD.html" title="Errno::ECHILD (class)">ECHILD</a></span>, <span class='object_link'><a href="Errno/ECHRNG.html" title="Errno::ECHRNG (class)">ECHRNG</a></span>, <span class='object_link'><a href="Errno/ECOMM.html" title="Errno::ECOMM (class)">ECOMM</a></span>, <span class='object_link'><a href="Errno/ECONNABORTED.html" title="Errno::ECONNABORTED (class)">ECONNABORTED</a></span>, <span class='object_link'><a href="Errno/ECONNREFUSED.html" title="Errno::ECONNREFUSED (class)">ECONNREFUSED</a></span>, <span class='object_link'><a href="Errno/ECONNRESET.html" title="Errno::ECONNRESET (class)">ECONNRESET</a></span>, <span class='object_link'><a href="Errno/EDEADLK.html" title="Errno::EDEADLK (class)">EDEADLK</a></span>, <span class='object_link'><a href="Errno/EDEADLOCK.html" title="Errno::EDEADLOCK (class)">EDEADLOCK</a></span>, <span class='object_link'><a href="Errno/EDESTADDRREQ.html" title="Errno::EDESTADDRREQ (class)">EDESTADDRREQ</a></span>, <span class='object_link'><a href="Errno/EDOM.html" title="Errno::EDOM (class)">EDOM</a></span>, <span class='object_link'><a href="Errno/EDOOFUS.html" title="Errno::EDOOFUS (class)">EDOOFUS</a></span>, <span class='object_link'><a href="Errno/EDOTDOT.html" title="Errno::EDOTDOT (class)">EDOTDOT</a></span>, <span class='object_link'><a href="Errno/EDQUOT.html" title="Errno::EDQUOT (class)">EDQUOT</a></span>, <span class='object_link'><a href="Errno/EEXIST.html" title="Errno::EEXIST (class)">EEXIST</a></span>, <span class='object_link'><a href="Errno/EFAULT.html" title="Errno::EFAULT (class)">EFAULT</a></span>, <span class='object_link'><a href="Errno/EFBIG.html" title="Errno::EFBIG (class)">EFBIG</a></span>, <span class='object_link'><a href="Errno/EFTYPE.html" title="Errno::EFTYPE (class)">EFTYPE</a></span>, <span class='object_link'><a href="Errno/EHOSTDOWN.html" title="Errno::EHOSTDOWN (class)">EHOSTDOWN</a></span>, <span class='object_link'><a href="Errno/EHOSTUNREACH.html" title="Errno::EHOSTUNREACH (class)">EHOSTUNREACH</a></span>, <span class='object_link'><a href="Errno/EHWPOISON.html" title="Errno::EHWPOISON (class)">EHWPOISON</a></span>, <span class='object_link'><a href="Errno/EIDRM.html" title="Errno::EIDRM (class)">EIDRM</a></span>, <span class='object_link'><a href="Errno/EILSEQ.html" title="Errno::EILSEQ (class)">EILSEQ</a></span>, <span class='object_link'><a href="Errno/EINPROGRESS.html" title="Errno::EINPROGRESS (class)">EINPROGRESS</a></span>, <span class='object_link'><a href="Errno/EINTR.html" title="Errno::EINTR (class)">EINTR</a></span>, <span class='object_link'><a href="Errno/EINVAL.html" title="Errno::EINVAL (class)">EINVAL</a></span>, <span class='object_link'><a href="Errno/EIO.html" title="Errno::EIO (class)">EIO</a></span>, <span class='object_link'><a href="Errno/EIPSEC.html" title="Errno::EIPSEC (class)">EIPSEC</a></span>, <span class='object_link'><a href="Errno/EISCONN.html" title="Errno::EISCONN (class)">EISCONN</a></span>, <span class='object_link'><a href="Errno/EISDIR.html" title="Errno::EISDIR (class)">EISDIR</a></span>, <span class='object_link'><a href="Errno/EISNAM.html" title="Errno::EISNAM (class)">EISNAM</a></span>, <span class='object_link'><a href="Errno/EKEYEXPIRED.html" title="Errno::EKEYEXPIRED (class)">EKEYEXPIRED</a></span>, <span class='object_link'><a href="Errno/EKEYREJECTED.html" title="Errno::EKEYREJECTED (class)">EKEYREJECTED</a></span>, <span class='object_link'><a href="Errno/EKEYREVOKED.html" title="Errno::EKEYREVOKED (class)">EKEYREVOKED</a></span>, <span class='object_link'><a href="Errno/EL2HLT.html" title="Errno::EL2HLT (class)">EL2HLT</a></span>, <span class='object_link'><a href="Errno/EL2NSYNC.html" title="Errno::EL2NSYNC (class)">EL2NSYNC</a></span>, <span class='object_link'><a href="Errno/EL3HLT.html" title="Errno::EL3HLT (class)">EL3HLT</a></span>, <span class='object_link'><a href="Errno/EL3RST.html" title="Errno::EL3RST (class)">EL3RST</a></span>, <span class='object_link'><a href="Errno/ELIBACC.html" title="Errno::ELIBACC (class)">ELIBACC</a></span>, <span class='object_link'><a href="Errno/ELIBBAD.html" title="Errno::ELIBBAD (class)">ELIBBAD</a></span>, <span class='object_link'><a href="Errno/ELIBEXEC.html" title="Errno::ELIBEXEC (class)">ELIBEXEC</a></span>, <span class='object_link'><a href="Errno/ELIBMAX.html" title="Errno::ELIBMAX (class)">ELIBMAX</a></span>, <span class='object_link'><a href="Errno/ELIBSCN.html" title="Errno::ELIBSCN (class)">ELIBSCN</a></span>, <span class='object_link'><a href="Errno/ELNRNG.html" title="Errno::ELNRNG (class)">ELNRNG</a></span>, <span class='object_link'><a href="Errno/ELOOP.html" title="Errno::ELOOP (class)">ELOOP</a></span>, <span class='object_link'><a href="Errno/EMEDIUMTYPE.html" title="Errno::EMEDIUMTYPE (class)">EMEDIUMTYPE</a></span>, <span class='object_link'><a href="Errno/EMFILE.html" title="Errno::EMFILE (class)">EMFILE</a></span>, <span class='object_link'><a href="Errno/EMLINK.html" title="Errno::EMLINK (class)">EMLINK</a></span>, <span class='object_link'><a href="Errno/EMSGSIZE.html" title="Errno::EMSGSIZE (class)">EMSGSIZE</a></span>, <span class='object_link'><a href="Errno/EMULTIHOP.html" title="Errno::EMULTIHOP (class)">EMULTIHOP</a></span>, <span class='object_link'><a href="Errno/ENAMETOOLONG.html" title="Errno::ENAMETOOLONG (class)">ENAMETOOLONG</a></span>, <span class='object_link'><a href="Errno/ENAVAIL.html" title="Errno::ENAVAIL (class)">ENAVAIL</a></span>, <span class='object_link'><a href="Errno/ENEEDAUTH.html" title="Errno::ENEEDAUTH (class)">ENEEDAUTH</a></span>, <span class='object_link'><a href="Errno/ENETDOWN.html" title="Errno::ENETDOWN (class)">ENETDOWN</a></span>, <span class='object_link'><a href="Errno/ENETRESET.html" title="Errno::ENETRESET (class)">ENETRESET</a></span>, <span class='object_link'><a href="Errno/ENETUNREACH.html" title="Errno::ENETUNREACH (class)">ENETUNREACH</a></span>, <span class='object_link'><a href="Errno/ENFILE.html" title="Errno::ENFILE (class)">ENFILE</a></span>, <span class='object_link'><a href="Errno/ENOANO.html" title="Errno::ENOANO (class)">ENOANO</a></span>, <span class='object_link'><a href="Errno/ENOATTR.html" title="Errno::ENOATTR (class)">ENOATTR</a></span>, <span class='object_link'><a href="Errno/ENOBUFS.html" title="Errno::ENOBUFS (class)">ENOBUFS</a></span>, <span class='object_link'><a href="Errno/ENOCSI.html" title="Errno::ENOCSI (class)">ENOCSI</a></span>, <span class='object_link'><a href="Errno/ENODATA.html" title="Errno::ENODATA (class)">ENODATA</a></span>, <span class='object_link'><a href="Errno/ENODEV.html" title="Errno::ENODEV (class)">ENODEV</a></span>, <span class='object_link'><a href="Errno/ENOENT.html" title="Errno::ENOENT (class)">ENOENT</a></span>, <span class='object_link'><a href="Errno/ENOEXEC.html" title="Errno::ENOEXEC (class)">ENOEXEC</a></span>, <span class='object_link'><a href="Errno/ENOKEY.html" title="Errno::ENOKEY (class)">ENOKEY</a></span>, <span class='object_link'><a href="Errno/ENOLCK.html" title="Errno::ENOLCK (class)">ENOLCK</a></span>, <span class='object_link'><a href="Errno/ENOLINK.html" title="Errno::ENOLINK (class)">ENOLINK</a></span>, <span class='object_link'><a href="Errno/ENOMEDIUM.html" title="Errno::ENOMEDIUM (class)">ENOMEDIUM</a></span>, <span class='object_link'><a href="Errno/ENOMEM.html" title="Errno::ENOMEM (class)">ENOMEM</a></span>, <span class='object_link'><a href="Errno/ENOMSG.html" title="Errno::ENOMSG (class)">ENOMSG</a></span>, <span class='object_link'><a href="Errno/ENONET.html" title="Errno::ENONET (class)">ENONET</a></span>, <span class='object_link'><a href="Errno/ENOPKG.html" title="Errno::ENOPKG (class)">ENOPKG</a></span>, <span class='object_link'><a href="Errno/ENOPROTOOPT.html" title="Errno::ENOPROTOOPT (class)">ENOPROTOOPT</a></span>, <span class='object_link'><a href="Errno/ENOSPC.html" title="Errno::ENOSPC (class)">ENOSPC</a></span>, <span class='object_link'><a href="Errno/ENOSR.html" title="Errno::ENOSR (class)">ENOSR</a></span>, <span class='object_link'><a href="Errno/ENOSTR.html" title="Errno::ENOSTR (class)">ENOSTR</a></span>, <span class='object_link'><a href="Errno/ENOSYS.html" title="Errno::ENOSYS (class)">ENOSYS</a></span>, <span class='object_link'><a href="Errno/ENOTBLK.html" title="Errno::ENOTBLK (class)">ENOTBLK</a></span>, <span class='object_link'><a href="Errno/ENOTCAPABLE.html" title="Errno::ENOTCAPABLE (class)">ENOTCAPABLE</a></span>, <span class='object_link'><a href="Errno/ENOTCONN.html" title="Errno::ENOTCONN (class)">ENOTCONN</a></span>, <span class='object_link'><a href="Errno/ENOTDIR.html" title="Errno::ENOTDIR (class)">ENOTDIR</a></span>, <span class='object_link'><a href="Errno/ENOTEMPTY.html" title="Errno::ENOTEMPTY (class)">ENOTEMPTY</a></span>, <span class='object_link'><a href="Errno/ENOTNAM.html" title="Errno::ENOTNAM (class)">ENOTNAM</a></span>, <span class='object_link'><a href="Errno/ENOTRECOVERABLE.html" title="Errno::ENOTRECOVERABLE (class)">ENOTRECOVERABLE</a></span>, <span class='object_link'><a href="Errno/ENOTSOCK.html" title="Errno::ENOTSOCK (class)">ENOTSOCK</a></span>, <span class='object_link'><a href="Errno/ENOTSUP.html" title="Errno::ENOTSUP (class)">ENOTSUP</a></span>, <span class='object_link'><a href="Errno/ENOTTY.html" title="Errno::ENOTTY (class)">ENOTTY</a></span>, <span class='object_link'><a href="Errno/ENOTUNIQ.html" title="Errno::ENOTUNIQ (class)">ENOTUNIQ</a></span>, <span class='object_link'><a href="Errno/ENXIO.html" title="Errno::ENXIO (class)">ENXIO</a></span>, <span class='object_link'><a href="Errno/EOPNOTSUPP.html" title="Errno::EOPNOTSUPP (class)">EOPNOTSUPP</a></span>, <span class='object_link'><a href="Errno/EOVERFLOW.html" title="Errno::EOVERFLOW (class)">EOVERFLOW</a></span>, <span class='object_link'><a href="Errno/EOWNERDEAD.html" title="Errno::EOWNERDEAD (class)">EOWNERDEAD</a></span>, <span class='object_link'><a href="Errno/EPERM.html" title="Errno::EPERM (class)">EPERM</a></span>, <span class='object_link'><a href="Errno/EPFNOSUPPORT.html" title="Errno::EPFNOSUPPORT (class)">EPFNOSUPPORT</a></span>, <span class='object_link'><a href="Errno/EPIPE.html" title="Errno::EPIPE (class)">EPIPE</a></span>, <span class='object_link'><a href="Errno/EPROCLIM.html" title="Errno::EPROCLIM (class)">EPROCLIM</a></span>, <span class='object_link'><a href="Errno/EPROCUNAVAIL.html" title="Errno::EPROCUNAVAIL (class)">EPROCUNAVAIL</a></span>, <span class='object_link'><a href="Errno/EPROGMISMATCH.html" title="Errno::EPROGMISMATCH (class)">EPROGMISMATCH</a></span>, <span class='object_link'><a href="Errno/EPROGUNAVAIL.html" title="Errno::EPROGUNAVAIL (class)">EPROGUNAVAIL</a></span>, <span class='object_link'><a href="Errno/EPROTO.html" title="Errno::EPROTO (class)">EPROTO</a></span>, <span class='object_link'><a href="Errno/EPROTONOSUPPORT.html" title="Errno::EPROTONOSUPPORT (class)">EPROTONOSUPPORT</a></span>, <span class='object_link'><a href="Errno/EPROTOTYPE.html" title="Errno::EPROTOTYPE (class)">EPROTOTYPE</a></span>, <span class='object_link'><a href="Errno/ERANGE.html" title="Errno::ERANGE (class)">ERANGE</a></span>, <span class='object_link'><a href="Errno/EREMCHG.html" title="Errno::EREMCHG (class)">EREMCHG</a></span>, <span class='object_link'><a href="Errno/EREMOTE.html" title="Errno::EREMOTE (class)">EREMOTE</a></span>, <span class='object_link'><a href="Errno/EREMOTEIO.html" title="Errno::EREMOTEIO (class)">EREMOTEIO</a></span>, <span class='object_link'><a href="Errno/ERESTART.html" title="Errno::ERESTART (class)">ERESTART</a></span>, <span class='object_link'><a href="Errno/ERFKILL.html" title="Errno::ERFKILL (class)">ERFKILL</a></span>, <span class='object_link'><a href="Errno/EROFS.html" title="Errno::EROFS (class)">EROFS</a></span>, <span class='object_link'><a href="Errno/ERPCMISMATCH.html" title="Errno::ERPCMISMATCH (class)">ERPCMISMATCH</a></span>, <span class='object_link'><a href="Errno/ESHUTDOWN.html" title="Errno::ESHUTDOWN (class)">ESHUTDOWN</a></span>, <span class='object_link'><a href="Errno/ESOCKTNOSUPPORT.html" title="Errno::ESOCKTNOSUPPORT (class)">ESOCKTNOSUPPORT</a></span>, <span class='object_link'><a href="Errno/ESPIPE.html" title="Errno::ESPIPE (class)">ESPIPE</a></span>, <span class='object_link'><a href="Errno/ESRCH.html" title="Errno::ESRCH (class)">ESRCH</a></span>, <span class='object_link'><a href="Errno/ESRMNT.html" title="Errno::ESRMNT (class)">ESRMNT</a></span>, <span class='object_link'><a href="Errno/ESTALE.html" title="Errno::ESTALE (class)">ESTALE</a></span>, <span class='object_link'><a href="Errno/ESTRPIPE.html" title="Errno::ESTRPIPE (class)">ESTRPIPE</a></span>, <span class='object_link'><a href="Errno/ETIME.html" title="Errno::ETIME (class)">ETIME</a></span>, <span class='object_link'><a href="Errno/ETIMEDOUT.html" title="Errno::ETIMEDOUT (class)">ETIMEDOUT</a></span>, <span class='object_link'><a href="Errno/ETOOMANYREFS.html" title="Errno::ETOOMANYREFS (class)">ETOOMANYREFS</a></span>, <span class='object_link'><a href="Errno/ETXTBSY.html" title="Errno::ETXTBSY (class)">ETXTBSY</a></span>, <span class='object_link'><a href="Errno/EUCLEAN.html" title="Errno::EUCLEAN (class)">EUCLEAN</a></span>, <span class='object_link'><a href="Errno/EUNATCH.html" title="Errno::EUNATCH (class)">EUNATCH</a></span>, <span class='object_link'><a href="Errno/EUSERS.html" title="Errno::EUSERS (class)">EUSERS</a></span>, <span class='object_link'><a href="Errno/EWOULDBLOCK.html" title="Errno::EWOULDBLOCK (class)">EWOULDBLOCK</a></span>, <span class='object_link'><a href="Errno/EXDEV.html" title="Errno::EXDEV (class)">EXDEV</a></span>, <span class='object_link'><a href="Errno/EXFULL.html" title="Errno::EXFULL (class)">EXFULL</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Dec 25 20:29:24 2020 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.25 (ruby-2.6.5).
+</div>
+
+    </div>
+  </body>
+</html>
